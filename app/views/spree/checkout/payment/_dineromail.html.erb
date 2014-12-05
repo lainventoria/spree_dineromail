@@ -6,6 +6,11 @@
   opts[:item_ammount_1] = @order.total.to_money.cents
   opts[:item_quantity_1] = 1
   opts[:transaction_id] = @order.number
+  opts[:buyer_name] = @order.billing_firstname
+  opts[:buyer_lastname] = @order.billing_lastname
+  opts[:buyer_email] = @order.email
+  opts[:buyer_phone] = @order.billing_address.phone
+
 %>
 
 <style>
