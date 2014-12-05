@@ -6,7 +6,7 @@ module SpreeDineromail
     config.autoload_paths += %W(#{config.root}/lib)
 
     initializer "spree.dineromail.payment_methods", :after => "spree.register.payment_methods" do |app|
-      app.config.spree.payment_methods << Spree::Gateway::Dineromail
+      app.config.spree.payment_methods << Spree::BillingIntegration::Dineromail
     end
 
     def self.activate
