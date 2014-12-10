@@ -4,6 +4,9 @@ class Spree::BillingIntegration::Dineromail < Spree::BillingIntegration
   preference :merchant, :string
   preference :country_id, :integer
   preference :payment_method_available, :string
+  preference :password, :string
+  preference :email, :string
+  preference :pin, :string
 
   def provider_class
     ActiveMerchant::Billing::Dineromail
