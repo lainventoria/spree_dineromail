@@ -1,6 +1,6 @@
 module Spree
   CheckoutController.class_eval do
-    before_filter :verify_dinero_mail_payment, only: [:update]
+    after_action :verify_dinero_mail_payment, only: [:update]
 
     private
 
@@ -13,14 +13,12 @@ module Spree
 
         return unless @payment_method.try(:kind_of?, Spree::BillingIntegration::Dineromail)
 
-        # FIXME en este punto siempre está vacío.  El pago se autocrea
-        # con estado "checkout" más tarde y queda duplicado.
-        if @order.payments.empty?
-          payment = @order.payments.create({amount: @order.total,
-                      payment_method: @payment_method})
+        # Para todos los pagos que se hagan con dineromail, verificar
+        # con el IPN que se haya completado el proceso con ellos.
+        @order.payments.where(payment_method: @payment_method).each do |payment|
+
           payment.started_processing!
 
-          # Chequear contra dineromail el estado del pago
 # FIXME habilitar cuando tengamos una cuenta para probar
 #         ipn = DineroMailIpn.new(account: @payment_method.preferences[:merchant],
 #                 password: @payment_method.preferences[:password])
