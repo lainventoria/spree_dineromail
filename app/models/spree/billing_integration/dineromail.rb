@@ -18,4 +18,8 @@ class Spree::BillingIntegration::Dineromail < Spree::BillingIntegration
     dineromail = self.provider
     dineromail.payment_url(opts)
   end
+
+  def source_required?
+    false
+  end
 end

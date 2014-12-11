@@ -1,3 +1,4 @@
 require 'spree_core'
-require 'dinero_mail_ipn'
+# FIXME actualizarlo para que use un httparty moderno
+# require 'dinero_mail_ipn'
 require 'spree_dineromail/engine'
