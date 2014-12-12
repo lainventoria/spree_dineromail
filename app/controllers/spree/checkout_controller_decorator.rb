@@ -19,16 +19,18 @@ module Spree
 
           payment.started_processing!
 
-# FIXME habilitar cuando tengamos una cuenta para probar
-#         ipn = DineroMailIpn.new(account: @payment_method.preferences[:merchant],
-#                 password: @payment_method.preferences[:password])
-#         t = ipn.consulta_transacciones([@order.number]).reports.first
-#         if t.valid? && t.amount == @order.total.to_money.cents
-            payment.pend! # if t.transaction_pending?
-#         else
-#           TODO cancelar la orden si el checkout de dineromail se hizo
-#           incorrectamente
-#         end
+          ipn = DineroMailIpn::Client.new(account: @payment_method.preferences[:merchant],
+                                          password: @payment_method.preferences[:password])
+          t = ipn.consulta_transacciones([@order.number]).reports.first
+
+          if t.valid? && t.amount == @order.total.to_money.cents
+            payment.pend!       if t.transaction_pending?
+            payment.complete!   if t.transaction_completed?
+            payment.invalidate! if t.transaction_cancelled?
+          else
+            # El pago no sirve si no se realizó en DineroMail
+            payment.invalidate!
+          end
         end
       end
   end
