@@ -22,13 +22,13 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<spree_core>, ["~> 2.3.0"])
-#      s.add_runtime_dependency(%q<dinero_mail_ipn>, ["~> 2.0.0"])
+      s.add_runtime_dependency(%q<dinero_mail_ipn>, ["~> 2.0.4"])
     else
       s.add_dependency(%q<spree_core>, ["~> 2.3.0"])
-#      s.add_dependency(%q<dinero_mail_ipn>, ["~> 2.0.0"])
+      s.add_dependency(%q<dinero_mail_ipn>, ["~> 2.0.4"])
     end
   else
     s.add_dependency(%q<spree_core>, ["~> 2.3.0"])
-#    s.add_dependency(%q<dinero_mail_ipn>, ["~> 2.0.0"])
+    s.add_dependency(%q<dinero_mail_ipn>, ["~> 2.0.4"])
   end
 end
